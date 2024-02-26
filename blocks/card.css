@@ -36,10 +36,28 @@
   border-radius: 0 0 10px 10px;
 }
 
+.card__title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .card__like-button {
   background: transparent url(../images/like-button-inactive.svg) center
     no-repeat;
   width: 21px;
   height: 18px;
   border: none;
+}
+
+@media screen and (max-width: 480px) {
+  .cards {
+    max-width: 282px;
+    margin: 0 auto;
+  }
+
+  .card__list {
+    max-width: 282px;
+    margin: 36px auto 0 auto;
+  }
 }
