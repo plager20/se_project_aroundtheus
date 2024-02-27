@@ -49,3 +49,7 @@
   height: 18px;
   border: none;
 }
+
+.card__like-button:hover {
+  opacity: 50%;
+}

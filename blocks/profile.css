@@ -41,6 +41,10 @@
   border: 1px white solid;
 }
 
+.profile__edit-button:hover {
+  opacity: 60%;
+}
+
 .profile__description {
   font-size: 18px;
   line-height: 22px;
@@ -56,6 +60,10 @@
   margin-left: auto;
   padding: 0;
   border: 2px white solid;
+}
+
+.profile__add-button:hover {
+  opacity: 60%;
 }
 
 @media screen and (max-width: 580px) {
