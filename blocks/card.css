@@ -49,15 +49,3 @@
   height: 18px;
   border: none;
 }
-
-@media screen and (max-width: 480px) {
-  .cards {
-    max-width: 282px;
-    margin: 0 auto;
-  }
-
-  .card__list {
-    max-width: 282px;
-    margin: 36px auto 0 auto;
-  }
-}
