@@ -11,3 +11,9 @@
   padding: 0;
   margin: 0;
 }
+
+@media screen and (max-width: 580px) {
+  .cards {
+    margin-top: 36px;
+  }
+}

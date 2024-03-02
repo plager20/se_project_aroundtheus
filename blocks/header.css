@@ -6,13 +6,13 @@
 .header__logo {
   width: 173px;
   height: 33px;
+  padding-bottom: 41px;
 }
 
 @media screen and (min-width: 581px) and (max-width: 880px) {
   .header {
     max-width: 581px;
     margin-top: 28px;
-    padding-left: 27px;
   }
 }
 
@@ -26,5 +26,6 @@
   .header__logo {
     width: 126px;
     height: 24px;
+    padding-bottom: 32px;
   }
 }
