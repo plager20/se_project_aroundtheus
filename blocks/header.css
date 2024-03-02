@@ -14,11 +14,6 @@
     margin-top: 28px;
     padding-left: 27px;
   }
-
-  .header__logo {
-    width: 173px;
-    height: 33px;
-  }
 }
 
 @media screen and (max-width: 580px) {
