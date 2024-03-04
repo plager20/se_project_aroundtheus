@@ -6,6 +6,6 @@ The site should be responsive allowing users to view the site on multiple device
 
 In this project, I ulitilized the grid mechanic in order to get the visual that was desired.
 
-Github: https://github.com/plager20/se_project_aroundtheus
+Github: https://plager20.github.io/se_project_aroundtheus/
 
 Project Overview Video: https://drive.google.com/file/d/159uDySEQE1mDtwVT-jtwKEGW5V-5tgbB/view?usp=sharing
