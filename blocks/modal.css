@@ -16,7 +16,7 @@
 
 .modal__container {
   position: relative;
-  padding: 36px;
+  padding: 34px 36px 36px 36px;
   background-color: #fff;
   margin: auto;
   border-radius: 10px;
@@ -51,6 +51,7 @@
   color: #000;
   margin: 0;
   padding-bottom: 54px;
+  height: 23px;
 }
 
 .modal__form {
@@ -58,4 +59,25 @@
   flex-direction: column;
   row-gap: 30px;
   margin: 0;
+}
+
+@media screen and (max-width: 580px) {
+  .modal__container {
+    padding: 25px 22px;
+    width: 238px;
+    height: 272px;
+  }
+
+  .modal__close {
+    top: -55px;
+    right: 0;
+    width: 26px;
+    height: 26px;
+  }
+
+  .modal__heading {
+    font-size: 18px;
+    line-height: 21.78px;
+    padding-bottom: 75px;
+  }
 }
