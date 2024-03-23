@@ -55,8 +55,7 @@ function getCardElement(cardData) {
   const cardImageEL = cardElement.querySelector(".card__image");
   cardImageEL.src = cardData.link;
 
-  const cardImageAltEL = cardElement.querySelector(".card__image");
-  cardImageAltEL.textContent = cardData.name;
+  cardImageEL.alt = cardData.name;
 
   const cardTitleEL = cardElement.querySelector(".card__title");
   cardTitleEL.textContent = cardData.name;
@@ -64,20 +63,28 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
-profileEditButton.addEventListener("click", () => {
+function openModal() {
+  profileEditModal.classList.add("modal_opened");
+}
+
+function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal_opened");
-});
+}
 
-profileEditCloseButton.addEventListener("click", closeModal());
+profileEditButton.addEventListener("click", openModal);
+profileEditButton.addEventListener("click", fillProfileForm);
 
-profileEditForm.addEventListener("submit", (e) => {
+profileEditCloseButton.addEventListener("click", closeModal);
+
+function profileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closeModal();
-});
+}
+
+profileEditForm.addEventListener("submit", profileEditSubmit);
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
