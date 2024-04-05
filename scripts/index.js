@@ -145,3 +145,11 @@ function renderCard(cardData, wrapper) {
   const cardElement = getCardElement(cardData);
   wrapper.prepend(cardElement);
 }
+
+// Image Preview
+const imagePreviewModal = document.querySelector("#image-modal");
+
+imagePreviewCloseButton = document.querySelector("#image-modal-close");
+imagePreviewCloseButton.addEventListener("click", () =>
+  closeModal(imagePreviewModal)
+);
