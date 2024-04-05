@@ -23,6 +23,16 @@
   width: 358px;
 }
 
+.modal__container_image {
+  max-width: 75vw;
+  max-height: 75vh;
+  padding: 0;
+  background: transparent;
+  border-radius: 0px;
+  width: unset;
+  padding: 0;
+}
+
 .modal__close {
   border: none;
   background-color: transparent;
@@ -90,10 +100,26 @@
   cursor: pointer;
 }
 
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.modal__image-title {
+  font-size: 12px;
+  line-height: 14.52px;
+  font-weight: 400;
+}
+
 @media screen and (max-width: 580px) {
   .modal__container {
     padding: 25px 22px;
     width: 238px;
+  }
+
+  .modal__container_image {
+    width: unset;
+    padding: 0;
   }
 
   .modal__close {
@@ -101,6 +127,11 @@
     right: 0;
     width: 26px;
     height: 26px;
+  }
+
+  .modal__close_image-preview {
+    top: -30px;
+    right: -30px;
   }
 
   .modal__heading {

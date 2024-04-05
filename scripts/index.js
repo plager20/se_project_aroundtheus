@@ -101,6 +101,17 @@ function getCardElement(cardData) {
     cardElement.remove();
   });
 
+  const imagePreviewModal = document.querySelector("#image-modal");
+  const modalImage = imagePreviewModal.querySelector("#modal-image");
+  const imageTitle = imagePreviewModal.querySelector("#modal-image-title");
+
+  cardImageEL.addEventListener("click", () => {
+    modalImage.src = cardData.link;
+    modalImage.alt = cardData.name;
+    imageTitle.textContent = cardData.name;
+    openModal(imagePreviewModal);
+  });
+
   cardImageEL.src = cardData.link;
   cardImageEL.alt = cardData.name;
   cardTitleEL.textContent = cardData.name;
@@ -134,5 +145,3 @@ function renderCard(cardData, wrapper) {
   const cardElement = getCardElement(cardData);
   wrapper.prepend(cardElement);
 }
-
-initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
