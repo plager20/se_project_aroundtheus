@@ -38,9 +38,12 @@ function closeModal(modal) {
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", closeModalEscape);
+  modal.addEventListener("mousedown", closeModalClick);
 }
 
 // Variables
+const modalContainer = document.querySelector(".modal__container");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#edit-modal");
 const profileEditCloseButton =
@@ -52,7 +55,7 @@ const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
-const profileEditForm = profileEditModal.querySelector("#edit-modal-form");
+const profileEditForm = document.forms[0];
 const imagePreviewModal = document.querySelector("#image-modal");
 const modalImage = imagePreviewModal.querySelector("#modal-image");
 const imageTitle = imagePreviewModal.querySelector("#modal-image-title");
@@ -124,7 +127,7 @@ function getCardElement(cardData) {
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
-const addCardFormElement = document.querySelector("#add-card-form");
+const addCardFormElement = document.forms[1];
 const cardTitleInput = addCardFormElement.querySelector(
   ".modal__input_type_title"
 );
@@ -152,3 +155,17 @@ function renderCard(cardData, wrapper) {
 imagePreviewCloseButton.addEventListener("click", () =>
   closeModal(imagePreviewModal)
 );
+
+// Close with Click/Escape Functions
+function closeModalClick(e) {
+  if (e.target === e.currentTarget) {
+    closeModal(e.currentTarget);
+  }
+}
+
+function closeModalEscape(e) {
+  if (e.key === "Escape") {
+    const targetModal = document.querySelector(".modal_opened");
+    closeModal(targetModal);
+  }
+}
