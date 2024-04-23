@@ -34,6 +34,8 @@ const initialCards = [
 // Modals
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", closeModalEscape);
+  modal.removeEventListener("mousedown", closeModalClick);
 }
 
 function openModal(modal) {
@@ -55,7 +57,7 @@ const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
-const profileEditForm = document.forms[0];
+const profileEditForm = document.querySelector("#edit-modal-form");
 const imagePreviewModal = document.querySelector("#image-modal");
 const modalImage = imagePreviewModal.querySelector("#modal-image");
 const imageTitle = imagePreviewModal.querySelector("#modal-image-title");
@@ -127,7 +129,7 @@ function getCardElement(cardData) {
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
-const addCardFormElement = document.forms[1];
+const addCardFormElement = document.querySelector("#add-card-form");
 const cardTitleInput = addCardFormElement.querySelector(
   ".modal__input_type_title"
 );
