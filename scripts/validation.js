@@ -48,8 +48,8 @@ function setEventListeners(formEl, options) {
 }
 
 function enableValidation(options) {
-  const formEls = [...document.querySelectorAll(options.formSelector)];
-  formEls.forEach((formEl) => {
+  const getFormList = [...document.querySelectorAll(options.formSelector)];
+  getFormList.forEach((formEl) => {
     formEl.addEventListener("submit", (e) => {
       e.preventDefault();
     });
@@ -58,13 +58,11 @@ function enableValidation(options) {
   });
 }
 
-const config = {
+enableValidation({
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
   inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
-};
-
-enableValidation(config);
+});
