@@ -39,9 +39,6 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
-card.getView();
-
 // Modals
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
@@ -108,23 +105,6 @@ const cardListEL = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
-const validationSettings = {
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
-
-const editFormElement = profileEditForm.querySelector(".modal__form");
-const addFormElement = imageAddModal.querySelector(".modal__form");
-
-const editFormValidator = new FormValidator(
-  validationSettings,
-  editFormElement
-);
-const addFormValidator = new FormValidator(validationSettings, addFormElement);
-
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEL = cardElement.querySelector(".card__image");
@@ -176,12 +156,11 @@ function handleAddCardSubmit(e) {
 addCardFormElement.addEventListener("submit", handleAddCardSubmit);
 
 function renderCard(cardData, wrapper) {
-  const cardElement = getCardElement(cardData);
-  wrapper.prepend(cardElement);
+  const card = new Card(cardData, cardTemplate);
+  wrapper.prepend(card.getView());
 }
 
 // Image Preview
-
 imagePreviewCloseButton.addEventListener("click", () =>
   closeModal(imagePreviewModal)
 );
@@ -199,3 +178,21 @@ function closeModalEscape(e) {
     closeModal(targetModal);
   }
 }
+
+// Validation
+const validationSettings = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const editFormValidator = new FormValidator(
+  validationSettings,
+  profileEditModal
+);
+const addFormValidator = new FormValidator(validationSettings, imageAddModal);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
