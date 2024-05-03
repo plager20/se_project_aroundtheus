@@ -10,11 +10,11 @@ class Card {
   _setEventListeners() {
     this._element
       .querySelector(".card__like-button")
-      .addEventListener("click", () => this._handleLikeIcon);
+      .addEventListener("click", () => this._handleLikeIcon());
 
     this._element
       .querySelector(".card__delete-button")
-      .addEventListener("click", () => this._handleDeleteCard(evt));
+      .addEventListener("click", () => this._handleDeleteCard());
 
     this._element
       .querySelector(".card__image")
@@ -33,7 +33,7 @@ class Card {
   }
 
   _handleDeleteCard(evt) {
-    evt.target.closest(".card").remove();
+    this._element.remove();
   }
 
   _getTemplate() {
@@ -44,7 +44,7 @@ class Card {
   }
 
   getView() {
-    this._element = _getTemplate();
+    this._element = this._getTemplate();
 
     this._element.querySelector(
       ".card__image"
@@ -52,6 +52,8 @@ class Card {
     this._element.querySelector(".card__title").textContent = this._name;
 
     this._setEventListeners();
+
+    return this._element;
   }
 }
 

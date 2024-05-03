@@ -116,7 +116,7 @@ function renderCard(cardData, wrapper) {
 }
 //
 //
-function handleImageClick() {
+function handleImageClick(cardData) {
   modalImage.src = cardData.link;
   modalImage.alt = cardData.name;
   imageTitle.textContent = cardData.name;
