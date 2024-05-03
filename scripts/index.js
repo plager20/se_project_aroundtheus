@@ -53,7 +53,6 @@ function openModal(modal) {
 }
 
 // Variables
-const modalContainer = document.querySelector(".modal__container");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#edit-modal");
 const profileEditCloseButton =
@@ -106,34 +105,26 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
 function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEL = cardElement.querySelector(".card__image");
-  const cardTitleEL = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-
-  deleteButton.addEventListener("click", (evt) => {
-    evt.target.closest(".card").remove();
-  });
-
-  cardImageEL.addEventListener("click", () => {
-    modalImage.src = cardData.link;
-    modalImage.alt = cardData.name;
-    imageTitle.textContent = cardData.name;
-    openModal(imagePreviewModal);
-  });
-
-  cardImageEL.src = cardData.link;
-  cardImageEL.alt = cardData.name;
-  cardTitleEL.textContent = cardData.name;
-
-  return cardElement;
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  const element = card.getView();
+  return element;
 }
 
+function renderCard(cardData, wrapper) {
+  const element = getCardElement(cardData);
+  wrapper.prepend(element);
+}
+//
+//
+function handleImageClick() {
+  modalImage.src = cardData.link;
+  modalImage.alt = cardData.name;
+  imageTitle.textContent = cardData.name;
+  openModal(imagePreviewModal);
+}
+//
+//
+//
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
@@ -154,12 +145,11 @@ function handleAddCardSubmit(e) {
 }
 
 addCardFormElement.addEventListener("submit", handleAddCardSubmit);
-
-function renderCard(cardData, wrapper) {
-  const card = new Card(cardData, cardTemplate);
-  wrapper.prepend(card.getView());
-}
-
+//
+//
+//
+//
+//
 // Image Preview
 imagePreviewCloseButton.addEventListener("click", () =>
   closeModal(imagePreviewModal)
