@@ -69,9 +69,12 @@ const imagePreviewModal = document.querySelector("#image-modal");
 const modalImage = imagePreviewModal.querySelector("#modal-image");
 const imageTitle = imagePreviewModal.querySelector("#modal-image-title");
 const imagePreviewCloseButton = document.querySelector("#image-modal-close");
+const imageAddButton = document.querySelector(".profile__add-button");
+const imageAddModal = document.querySelector("#add-modal");
+const imageAddCloseButton = imageAddModal.querySelector("#add-modal-close");
+const cardListEL = document.querySelector(".cards__list");
 
 // Profile Edit Modal
-
 function openProfileEditForm() {
   openModal(profileEditModal);
   profileTitleInput.value = profileTitle.textContent;
@@ -92,18 +95,10 @@ profileEditCloseButton.addEventListener("click", () =>
 profileEditForm.addEventListener("submit", handleProfileEditFormSubmit);
 
 // Image Add Modal
-const imageAddButton = document.querySelector(".profile__add-button");
-const imageAddModal = document.querySelector("#add-modal");
-const imageAddCloseButton = imageAddModal.querySelector("#add-modal-close");
-
 imageAddButton.addEventListener("click", () => openModal(imageAddModal));
 imageAddCloseButton.addEventListener("click", () => closeModal(imageAddModal));
 
 // Initial Cards
-const cardListEL = document.querySelector(".cards__list");
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
-
 function getCardElement(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   const element = card.getView();
@@ -114,17 +109,7 @@ function renderCard(cardData, wrapper) {
   const element = getCardElement(cardData);
   wrapper.prepend(element);
 }
-//
-//
-function handleImageClick(cardData) {
-  modalImage.src = cardData.link;
-  modalImage.alt = cardData.name;
-  imageTitle.textContent = cardData.name;
-  openModal(imagePreviewModal);
-}
-//
-//
-//
+
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
@@ -145,15 +130,18 @@ function handleAddCardSubmit(e) {
 }
 
 addCardFormElement.addEventListener("submit", handleAddCardSubmit);
-//
-//
-//
-//
-//
+
 // Image Preview
 imagePreviewCloseButton.addEventListener("click", () =>
   closeModal(imagePreviewModal)
 );
+
+function handleImageClick(cardData) {
+  modalImage.src = cardData.link;
+  modalImage.alt = cardData.name;
+  imageTitle.textContent = cardData.name;
+  openModal(imagePreviewModal);
+}
 
 // Close with Click/Escape Functions
 function closeModalClick(e) {
