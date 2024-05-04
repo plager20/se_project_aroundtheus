@@ -1,5 +1,5 @@
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
   {
@@ -124,9 +124,9 @@ function handleAddCardSubmit(e) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEL);
-  cardTitleInput.value = "";
-  cardUrlInput.value = "";
+  addCardFormElement.reset();
   closeModal(imageAddModal);
+  toggleButtonState();
 }
 
 addCardFormElement.addEventListener("submit", handleAddCardSubmit);
