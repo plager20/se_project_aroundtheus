@@ -126,7 +126,7 @@ function handleAddCardSubmit(e) {
   renderCard({ name, link }, cardListEL);
   addCardFormElement.reset();
   closeModal(imageAddModal);
-  toggleButtonState();
+  addFormValidator.toggleButtonState();
 }
 
 addCardFormElement.addEventListener("submit", handleAddCardSubmit);

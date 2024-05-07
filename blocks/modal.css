@@ -85,7 +85,7 @@
   height: 14px;
 }
 
-.modal__input:invalid {
+.modal__input_type_error {
   border-bottom: 1px solid #ff0000;
 }
 
