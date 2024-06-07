@@ -78,14 +78,14 @@ const section = new Section(
 );
 
 const popupImage = new PopupWithImage({
-  popupSelector: imagePreviewModal,
+  popupSelector: "#image-modal",
   modalImage,
   imageTitle,
 });
 popupImage.setEventListeners();
 
 const newCardPopup = new PopupWithForm({
-  popupSelector: imageAddModal,
+  popupSelector: "#add-modal",
   handleFormSubmit: handleAddCardSubmit,
 });
 newCardPopup.setEventListeners();
@@ -93,7 +93,7 @@ newCardPopup.setEventListeners();
 const userInfo = new UserInfo(profileTitle, profileDescription);
 
 const profileEditPopup = new PopupWithForm({
-  popupSelector: profileEditModal,
+  popupSelector: "#edit-modal",
   handleFormSubmit: handleProfileEditFormSubmit,
 });
 
