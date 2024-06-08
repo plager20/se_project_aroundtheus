@@ -1,11 +1,11 @@
-import Card from "./components/Card.js";
-import FormValidator from "./components/FormValidator.js";
-import "./styles/index.css";
-import Popup from "./components/Popup.js";
-import PopupWithForm from "./components/PopupWithForm.js";
-import PopupWithImage from "./components/PopupWithImage.js";
-import Section from "./components/Section.js";
-import UserInfo from "./components/UserInfo.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import "./index.css";
+import Popup from "../components/Popup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -80,7 +80,10 @@ const section = new Section(
 
 const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
 
-const userInfo = new UserInfo(profileTitle, profileDescription);
+const userInfo = new UserInfo({
+  profileName: ".profile__title",
+  jobElement: ".profile__description",
+});
 
 const profileEditPopup = new PopupWithForm(
   "#edit-modal",
@@ -98,18 +101,26 @@ popupImage.setEventListeners();
 profileEditCloseButton.addEventListener("click", () => {
   profileEditPopup.close();
 });
+
 // Profile Edit Modal
 function openProfileEditForm() {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  //profileTitleInput.value = profileTitle.textContent;
+  //profileDescriptionInput.value = profileDescription.textContent;
+  const profileInfo = userInfo.getUserInfo();
+  profileTitleInput.value = profileInfo.name;
+  profileDescriptionInput.value = profileInfo.job;
   profileEditPopup.open();
 }
 
 profileEditButton.addEventListener("click", openProfileEditForm);
 
-function handleProfileEditFormSubmit() {
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
+function handleProfileEditFormSubmit(inputValues) {
+  //profileTitle.textContent = profileTitleInput.value;
+  //profileDescription.textContent = profileDescriptionInput.value;
+  const profileInfo = {};
+  profileInfo.title = inputValues.title;
+  profileInfo.description = inputValues.description;
+  userInfo.setUserInfo(profileInfo);
   profileEditPopup.close();
 }
 
@@ -146,6 +157,7 @@ function handleAddCardSubmit() {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEL);
+  newCardPopup.reset();
   newCardPopup.close();
   addFormValidator.toggleButtonState();
 }
