@@ -118,8 +118,9 @@ function handleProfileEditFormSubmit(inputValues) {
   //profileTitle.textContent = profileTitleInput.value;
   //profileDescription.textContent = profileDescriptionInput.value;
   const profileInfo = {};
-  profileInfo.title = inputValues.title;
-  profileInfo.description = inputValues.description;
+  profileInfo.name = inputValues.name;
+  profileInfo.job = inputValues.job;
+  console.log(profileInfo);
   userInfo.setUserInfo(profileInfo);
   profileEditPopup.close();
 }
