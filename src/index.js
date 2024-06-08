@@ -67,6 +67,7 @@ const imageAddModal = document.querySelector("#add-modal");
 const imageAddCloseButton = imageAddModal.querySelector("#add-modal-close");
 const cardListEL = document.querySelector(".cards__list");
 
+// Classes
 const section = new Section(
   {
     items: initialCards,
@@ -77,40 +78,46 @@ const section = new Section(
   ".cards__list"
 );
 
-const popupImage = new PopupWithImage({
-  popupSelector: "#image-modal",
-  modalImage,
-  imageTitle,
-});
-popupImage.setEventListeners();
-
-const newCardPopup = new PopupWithForm({
-  popupSelector: "#add-modal",
-  handleFormSubmit: handleAddCardSubmit,
-});
-newCardPopup.setEventListeners();
+const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
 
 const userInfo = new UserInfo(profileTitle, profileDescription);
 
-const profileEditPopup = new PopupWithForm({
-  popupSelector: "#edit-modal",
-  handleFormSubmit: handleProfileEditFormSubmit,
+const profileEditPopup = new PopupWithForm(
+  "#edit-modal",
+  handleProfileEditFormSubmit
+);
+
+const popupImage = new PopupWithImage({
+  popupSelector: "#image-modal",
 });
 
+newCardPopup.setEventListeners();
+profileEditPopup.setEventListeners();
+popupImage.setEventListeners();
+
+profileEditCloseButton.addEventListener("click", () => {
+  profileEditPopup.close();
+});
 // Profile Edit Modal
-//function openProfileEditForm() {
-// openModal(profileEditModal);
-// profileTitleInput.value = profileTitle.textContent;
-// profileDescriptionInput.value = profileDescription.textContent;
-//}
+function openProfileEditForm() {
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  profileEditPopup.open();
+}
+
+profileEditButton.addEventListener("click", openProfileEditForm);
 
 function handleProfileEditFormSubmit() {
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closeModal(profileEditModal);
+  profileEditPopup.close();
 }
 
 // Initial Cards
+function handleImageClick(cardData) {
+  popupImage.open(cardData);
+}
+
 function getCardElement(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   const element = card.getView();
@@ -125,6 +132,11 @@ function renderCard(cardData, wrapper) {
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
+imageAddButton.addEventListener("click", () => {
+  newCardPopup.open();
+});
+
+const addCardFormElement = document.querySelector("#add-card-form");
 const cardTitleInput = addCardFormElement.querySelector(
   ".modal__input_type_title"
 );
@@ -134,7 +146,6 @@ function handleAddCardSubmit() {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEL);
-  newCardPopup.reset();
   newCardPopup.close();
   addFormValidator.toggleButtonState();
 }

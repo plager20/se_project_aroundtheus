@@ -39,7 +39,6 @@ class Card {
 
   getView() {
     this._element = this._getTemplate();
-    console.log(this._likeButton);
 
     this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__delete-button");
