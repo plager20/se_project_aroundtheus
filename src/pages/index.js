@@ -104,8 +104,6 @@ profileEditCloseButton.addEventListener("click", () => {
 
 // Profile Edit Modal
 function openProfileEditForm() {
-  //profileTitleInput.value = profileTitle.textContent;
-  //profileDescriptionInput.value = profileDescription.textContent;
   const profileInfo = userInfo.getUserInfo();
   profileTitleInput.value = profileInfo.name;
   profileDescriptionInput.value = profileInfo.job;
@@ -115,11 +113,9 @@ function openProfileEditForm() {
 profileEditButton.addEventListener("click", openProfileEditForm);
 
 function handleProfileEditFormSubmit(inputValues) {
-  //profileTitle.textContent = profileTitleInput.value;
-  //profileDescription.textContent = profileDescriptionInput.value;
   const profileInfo = {};
-  profileInfo.name = inputValues.name;
-  profileInfo.job = inputValues.job;
+  profileInfo.name = inputValues.title;
+  profileInfo.job = inputValues.description;
   console.log(profileInfo);
   userInfo.setUserInfo(profileInfo);
   profileEditPopup.close();
