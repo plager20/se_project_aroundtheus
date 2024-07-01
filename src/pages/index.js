@@ -52,20 +52,12 @@ const profileEditModal = document.querySelector("#edit-modal");
 const profileEditCloseButton =
   profileEditModal.querySelector("#edit-modal-close");
 
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
-const profileEditForm = document.querySelector("#edit-modal-form");
-const imagePreviewModal = document.querySelector("#image-modal");
-const modalImage = imagePreviewModal.querySelector("#modal-image");
-const imageTitle = imagePreviewModal.querySelector("#modal-image-title");
-const imagePreviewCloseButton = document.querySelector("#image-modal-close");
 const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddModal = document.querySelector("#add-modal");
-const imageAddCloseButton = imageAddModal.querySelector("#add-modal-close");
 const cardListEL = document.querySelector(".cards__list");
 
 // Classes
