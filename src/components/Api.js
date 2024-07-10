@@ -1,7 +1,7 @@
 export default class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
   async getUserInfo() {
@@ -28,13 +28,13 @@ export default class Api {
     });
   }
 
-  async updateUserInfo(name, about) {
+  async updateUserInfo(profileInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about,
+        name: profileInfo.name,
+        about: profileInfo.job,
       }),
     }).then((res) => {
       if (res.ok) {
@@ -44,12 +44,12 @@ export default class Api {
     });
   }
 
-  async updateAvatar(newAvatar) {
+  async updateAvatar(profileInfo) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: newAvatar,
+        avatar: profileInfo.avatar,
       }),
     }).then((res) => {
       if (res.ok) {

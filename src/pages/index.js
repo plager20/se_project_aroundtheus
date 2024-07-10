@@ -60,58 +60,126 @@ const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddModal = document.querySelector("#add-modal");
 const cardListEL = document.querySelector(".cards__list");
 
-// Classes
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      section.addItem(cardData);
-    },
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "02e2a34c-53b2-49ac-946d-3d9791bbdd65",
+    "Content-Type": "application/json",
   },
-  ".cards__list"
-);
+});
 
-const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
+// Classes
+
+api.getInitialCards().then((initialCards) => {
+  const cardList = new Section(
+    {
+      items: initialCards,
+      renderer: (cardData) => {
+        cardList.addItem(cardData);
+      },
+    },
+    ".cards__list"
+  );
+});
 
 const userInfo = new UserInfo({
   profileName: ".profile__title",
   jobElement: ".profile__description",
+  avatar: ".profile__image",
 });
 
-const profileEditPopup = new PopupWithForm(
-  "#edit-modal",
-  handleProfileEditFormSubmit
-);
+api
+  .getUserInfo()
+  .then((res) => {
+    userInfo.setUserInfo({
+      name: res.name,
+      job: res.about,
+      avatar: res.avatar,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
 
 const popupImage = new PopupWithImage({
   popupSelector: "#image-modal",
 });
 
 newCardPopup.setEventListeners();
-profileEditPopup.setEventListeners();
+
 popupImage.setEventListeners();
+
+// Profile Edit Modal
+
+const profileEditPopup = new PopupWithForm(
+  "#edit-modal",
+  handleProfileEditFormSubmit
+);
+
+profileEditPopup.setEventListeners();
+
+function fillProfileForm() {
+  const profileInfo = userInfo.getUserInfo();
+  profileTitleInput.value = profileInfo.name;
+  profileDescriptionInput.value = profileInfo.job;
+}
+
+profileEditButton.addEventListener("click", () => {
+  fillProfileForm();
+  profileEditPopup.open();
+});
+
+function handleProfileEditFormSubmit(profileInfo) {
+  profileEditPopup.setLoading(true);
+  api
+    .updateUserInfo(profileInfo)
+    .then((res) => {
+      userInfo.setUserInfo({
+        name: res.name,
+        job: res.about,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => profileEditPopup.setLoading(false));
+
+  profileEditPopup.close();
+}
 
 profileEditCloseButton.addEventListener("click", () => {
   profileEditPopup.close();
 });
 
-// Profile Edit Modal
-function openProfileEditForm() {
-  const profileInfo = userInfo.getUserInfo();
-  profileTitleInput.value = profileInfo.name;
-  profileDescriptionInput.value = profileInfo.job;
-  profileEditPopup.open();
-}
+// Change Avatar Modal
 
-profileEditButton.addEventListener("click", openProfileEditForm);
+const changeImageForm = new PopupWithForm(
+  "#change-avatar-modal",
+  handleChangeAvatarFormSubmit
+);
+changeImageForm.setEventListeners();
 
-function handleProfileEditFormSubmit(inputValues) {
-  const profileInfo = {};
-  profileInfo.name = inputValues.title;
-  profileInfo.job = inputValues.description;
-  console.log(profileInfo);
-  userInfo.setUserInfo(profileInfo);
-  profileEditPopup.close();
+const changeAvatarButton = document.querySelector(
+  ".change-avatar__edit-button"
+);
+
+changeAvatarButton.addEventListener("click", (evt) => {
+  evt.preventDefault;
+  changeImageForm.open();
+});
+
+function handleChangeAvatarFormSubmit(profileInfo) {
+  changeImageForm.setLoading(true);
+  api
+    .updateAvatar(profileInfo)
+    .then((res) => {
+      userInfo.setAvatar({ avatar: res.avatar });
+      changeImageForm.close();
+    })
+    .catch((err) => console.error(err))
+    .finally(() => changeImageForm.setLoading(false));
 }
 
 // Initial Cards
