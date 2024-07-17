@@ -19,7 +19,6 @@ export default class UserInfo {
     if (userInf.avatar) {
       this._avatar.src = userInf.avatar;
     }
-    //this._avatar.src = userInf.avatar;
     return;
   }
 

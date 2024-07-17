@@ -70,18 +70,6 @@ const api = new Api({
 
 // Classes
 
-api.getInitialCards().then((initialCards) => {
-  const cardList = new Section(
-    {
-      items: initialCards,
-      renderer: (cardData) => {
-        cardList.addItem(cardData);
-      },
-    },
-    ".cards__list"
-  );
-});
-
 const userInfo = new UserInfo({
   profileName: ".profile__title",
   jobElement: ".profile__description",
@@ -101,13 +89,9 @@ api
     console.log(err);
   });
 
-const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
-
 const popupImage = new PopupWithImage({
   popupSelector: "#image-modal",
 });
-
-newCardPopup.setEventListeners();
 
 popupImage.setEventListeners();
 
@@ -183,9 +167,15 @@ function handleChangeAvatarFormSubmit(profileInfo) {
 }
 
 // Initial Cards
-function handleImageClick(cardData) {
-  popupImage.open(cardData);
-}
+
+const cardList = new Section(
+  {
+    renderer: (items) => {
+      cardList.addItem(items);
+    },
+  },
+  ".cards__list"
+);
 
 function getCardElement(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
@@ -193,14 +183,31 @@ function getCardElement(cardData) {
   return element;
 }
 
-function renderCard(cardData, wrapper) {
-  const element = getCardElement(cardData);
-  wrapper.prepend(element);
+function cardListData() {
+  return api.getInitialCards().then((initialCardData) => {
+    const cardElement = initialCardData.map((cardData) =>
+      getCardElement(cardData)
+    );
+    cardList.renderItems(cardElement);
+  });
 }
 
-initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
+cardListData();
+
+// function renderCard(cardData, wrapper) {
+//   const element = getCardElement(cardData);
+//   wrapper.prepend(element);
+// }
+
+// initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 // New Cards
+
+//api.createNewCard().then();
+
+const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
+newCardPopup.setEventListeners();
+
 imageAddButton.addEventListener("click", () => {
   newCardPopup.open();
 });
@@ -211,13 +218,31 @@ const cardTitleInput = addCardFormElement.querySelector(
 );
 const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 
-function handleAddCardSubmit() {
-  const name = cardTitleInput.value;
-  const link = cardUrlInput.value;
-  renderCard({ name, link }, cardListEL);
+// function handleAddCardSubmit() {
+//   const name = cardTitleInput.value;
+//   const link = cardUrlInput.value;
+//   renderCard({ name, link }, cardListEL);
+//   newCardPopup.reset();
+//   newCardPopup.close();
+//   addFormValidator.toggleButtonState();
+// }
+
+function handleAddCardSubmit(inputValue) {
+  const name = inputValue.title;
+  const link = inputValue.link;
+  api.createNewCard({ name, link }).then((card) => {
+    const cardElement = getCardElement(card);
+    cardList.addItem(cardElement);
+  });
   newCardPopup.reset();
   newCardPopup.close();
   addFormValidator.toggleButtonState();
+}
+
+// View Image Popup
+
+function handleImageClick(cardData) {
+  popupImage.open(cardData);
 }
 
 // Validation
