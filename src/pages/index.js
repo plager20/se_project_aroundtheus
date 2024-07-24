@@ -7,44 +7,45 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupDeleteConfirm from "../components/PopupDeleteConfirm.js";
 
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-    alt: "Picture of Yosemite Valley",
-  },
-];
+// const initialCards = [
+//   {
+//     name: "Yosemite Valley",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+//   {
+//     name: "Lake Louise",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+//   {
+//     name: "Bald Mountains",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+//   {
+//     name: "Latemar",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+//   {
+//     name: "Vanoise National Park",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+//   {
+//     name: "Lago di Braies",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+//     alt: "Picture of Yosemite Valley",
+//   },
+// ];
 
-const cardData = {
-  name: "Yosemite Valley",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
+// const cardData = {
+//   name: "Yosemite Valley",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+// };
 
 // Variables
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -58,7 +59,7 @@ const profileDescriptionInput = document.querySelector(
 );
 const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddModal = document.querySelector("#add-modal");
-const cardListEL = document.querySelector(".cards__list");
+// const cardListEL = document.querySelector(".cards__list");
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -178,32 +179,27 @@ const cardList = new Section(
 );
 
 function getCardElement(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleImageClick,
+    handleDeleteCard
+  );
   const element = card.getView();
   return element;
 }
 
-function cardListData() {
-  return api.getInitialCards().then((initialCardData) => {
-    const cardElement = initialCardData.map((cardData) =>
-      getCardElement(cardData)
-    );
-    cardList.renderItems(cardElement);
-  });
+async function cardListData() {
+  const initialCardData = await api.getInitialCards();
+  const cardElement = initialCardData.map((cardData) =>
+    getCardElement(cardData)
+  );
+  cardList.renderItems(cardElement);
 }
 
 cardListData();
 
-// function renderCard(cardData, wrapper) {
-//   const element = getCardElement(cardData);
-//   wrapper.prepend(element);
-// }
-
-// initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
-
 // New Cards
-
-//api.createNewCard().then();
 
 const newCardPopup = new PopupWithForm("#add-modal", handleAddCardSubmit);
 newCardPopup.setEventListeners();
@@ -212,20 +208,11 @@ imageAddButton.addEventListener("click", () => {
   newCardPopup.open();
 });
 
-const addCardFormElement = document.querySelector("#add-card-form");
-const cardTitleInput = addCardFormElement.querySelector(
-  ".modal__input_type_title"
-);
-const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
-
-// function handleAddCardSubmit() {
-//   const name = cardTitleInput.value;
-//   const link = cardUrlInput.value;
-//   renderCard({ name, link }, cardListEL);
-//   newCardPopup.reset();
-//   newCardPopup.close();
-//   addFormValidator.toggleButtonState();
-// }
+// const addCardFormElement = document.querySelector("#add-card-form");
+// const cardTitleInput = addCardFormElement.querySelector(
+//   ".modal__input_type_title"
+// );
+// const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 
 function handleAddCardSubmit(inputValue) {
   const name = inputValue.title;
@@ -237,6 +224,24 @@ function handleAddCardSubmit(inputValue) {
   newCardPopup.reset();
   newCardPopup.close();
   addFormValidator.toggleButtonState();
+}
+
+// Delete Card
+
+const deleteConfirmation = new PopupDeleteConfirm({
+  popupSelector: "#delete-image-modal",
+  handleFormSubmit: handleDeleteCard,
+});
+deleteConfirmation.setEventListeners();
+
+function handleDeleteCard(card) {
+  deleteConfirmation.open();
+  deleteConfirmation.confirmDelete(() => {
+    api.deleteCard(card.getCardId()).then(() => {
+      card.removeCard();
+      deleteConfirmation.close();
+    });
+  });
 }
 
 // View Image Popup
