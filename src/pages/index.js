@@ -167,6 +167,24 @@ function handleChangeAvatarFormSubmit(profileInfo) {
     .finally(() => changeImageForm.setLoading(false));
 }
 
+// Delete Card
+
+const deleteConfirmation = new PopupDeleteConfirm(
+  "#delete-image-modal",
+  handleDeleteCard
+);
+deleteConfirmation.setEventListeners();
+
+function handleDeleteCard(card) {
+  deleteConfirmation.open();
+  deleteConfirmation.confirmDelete(() => {
+    api.deleteCard(card.getCardId()).then(() => {
+      card.removeCard();
+      deleteConfirmation.close();
+    });
+  });
+}
+
 // Initial Cards
 
 const cardList = new Section(
@@ -224,24 +242,6 @@ function handleAddCardSubmit(inputValue) {
   newCardPopup.reset();
   newCardPopup.close();
   addFormValidator.toggleButtonState();
-}
-
-// Delete Card
-
-const deleteConfirmation = new PopupDeleteConfirm({
-  popupSelector: "#delete-image-modal",
-  handleFormSubmit: handleDeleteCard,
-});
-deleteConfirmation.setEventListeners();
-
-function handleDeleteCard(card) {
-  deleteConfirmation.open();
-  deleteConfirmation.confirmDelete(() => {
-    api.deleteCard(card.getCardId()).then(() => {
-      card.removeCard();
-      deleteConfirmation.close();
-    });
-  });
 }
 
 // View Image Popup
