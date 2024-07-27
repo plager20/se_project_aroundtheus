@@ -169,6 +169,14 @@ function handleChangeAvatarFormSubmit(profileInfo) {
 
 // Delete Card
 
+const deleteImageModal = document.querySelector("#delete-image-modal");
+const deleteImageConfirmationButton =
+  deleteImageModal.querySelector(".modal__button");
+
+deleteImageConfirmationButton.addEventListener("click", () => {
+  deleteConfirmation.setLoading(true);
+});
+
 const deleteConfirmation = new PopupDeleteConfirm(
   "#delete-image-modal",
   handleDeleteCard
@@ -177,10 +185,12 @@ deleteConfirmation.setEventListeners();
 
 function handleDeleteCard(card) {
   deleteConfirmation.open();
+
   deleteConfirmation.confirmDelete(() => {
     api.deleteCard(card.getCardId()).then(() => {
       card.removeCard();
       deleteConfirmation.close();
+      deleteConfirmation.setLoading(false);
     });
   });
 }
