@@ -6,7 +6,6 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    console.log(this._profileName);
     return {
       name: this._profileName.textContent,
       job: this._jobElement.textContent,
