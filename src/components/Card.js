@@ -9,7 +9,7 @@ class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
-    this._like = data.isLike;
+    this._like = data.isLiked;
 
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
@@ -55,20 +55,18 @@ class Card {
     } else {
       this._likeButton.classList.remove("card__like-button_active");
     }
+
+    this._likeCounter = this._element.querySelector(".card__like-count");
+    if (this._like) {
+      this._likeCounter.textContent = "1";
+    } else {
+      this._likeCounter.textContent = "0";
+    }
   }
 
   handleLike(liked) {
     this._like = liked;
     this._handleLikeIcon();
-  }
-
-  handleLikeCounter() {
-    this._likeCounter = this._element.querySelector(".card__like-count");
-    if (!this._like) {
-      this._likeCounter.textContent = "1";
-    } else {
-      this._likeCounter.textContent = "0";
-    }
   }
 
   //Deleting

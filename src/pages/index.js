@@ -151,11 +151,14 @@ function handleDeleteCard(cardData) {
   deleteConfirmation.open();
 
   deleteConfirmation.confirmDelete(() => {
-    api.deleteCard(cardData.getCardId()).then(() => {
-      cardData.removeCard();
-      deleteConfirmation.close();
-      deleteConfirmation.setLoading(false);
-    });
+    api
+      .deleteCard(cardData.getCardId())
+      .then(() => {
+        cardData.removeCard();
+        deleteConfirmation.close();
+      })
+      .catch((err) => console.error(err))
+      .finally(() => deleteConfirmation.setLoading(false));
   });
 }
 
@@ -171,7 +174,6 @@ function handleCardLike(cardData) {
       cardData.handleLike(false);
     });
   }
-  cardData.handleLikeCounter();
 }
 
 // Initial Cards
