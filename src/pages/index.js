@@ -147,7 +147,7 @@ const deleteConfirmation = new PopupDeleteConfirm(
 );
 deleteConfirmation.setEventListeners();
 
-function handleDeleteCard(Data) {
+function handleDeleteCard(cardData) {
   deleteConfirmation.open();
 
   deleteConfirmation.confirmDelete(() => {
