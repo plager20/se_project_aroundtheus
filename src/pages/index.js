@@ -69,7 +69,7 @@ const api = new Api({
   },
 });
 
-// Classes
+// Initial Start Up
 
 const userInfo = new UserInfo({
   profileName: ".profile__title",
@@ -89,6 +89,8 @@ api
   .catch((err) => {
     console.log(err);
   });
+
+// Image Popup
 
 const popupImage = new PopupWithImage({
   popupSelector: "#image-modal",
@@ -183,16 +185,30 @@ const deleteConfirmation = new PopupDeleteConfirm(
 );
 deleteConfirmation.setEventListeners();
 
-function handleDeleteCard(card) {
+function handleDeleteCard(Data) {
   deleteConfirmation.open();
 
   deleteConfirmation.confirmDelete(() => {
-    api.deleteCard(card.getCardId()).then(() => {
-      card.removeCard();
+    api.deleteCard(cardData.getCardId()).then(() => {
+      cardData.removeCard();
       deleteConfirmation.close();
       deleteConfirmation.setLoading(false);
     });
   });
+}
+
+//Liking and Disliking Cards
+
+function handleCardLike(cardData) {
+  if (!cardData._like) {
+    api.likeCard(cardData.getCardId()).then(() => {
+      cardData.handleLike(true);
+    });
+  } else if (cardData._like) {
+    api.dislikeCard(cardData.getCardId()).then(() => {
+      cardData.handleLike(false);
+    });
+  }
 }
 
 // Initial Cards
@@ -211,7 +227,8 @@ function getCardElement(cardData) {
     cardData,
     "#card-template",
     handleImageClick,
-    handleDeleteCard
+    handleDeleteCard,
+    handleCardLike
   );
   const element = card.getView();
   return element;

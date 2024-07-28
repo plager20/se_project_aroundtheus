@@ -39,6 +39,14 @@
   padding: 0;
 }
 
+.card__like-container {
+  max-width: 21px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .card__like-button {
   background: transparent url("../images/like-inactive.svg") center no-repeat;
   width: 21px;
@@ -55,6 +63,12 @@
 .card__like-button:hover {
   opacity: 50%;
   cursor: pointer;
+}
+
+.card__like-count {
+  margin: 0;
+  padding: 3px 0 0 0;
+  font-size: 13px;
 }
 
 .card__delete-button {
