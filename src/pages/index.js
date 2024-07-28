@@ -9,44 +9,6 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupDeleteConfirm from "../components/PopupDeleteConfirm.js";
 
-// const initialCards = [
-//   {
-//     name: "Yosemite Valley",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-//   {
-//     name: "Lake Louise",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-//   {
-//     name: "Bald Mountains",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-//   {
-//     name: "Latemar",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-//   {
-//     name: "Vanoise National Park",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-//   {
-//     name: "Lago di Braies",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-//     alt: "Picture of Yosemite Valley",
-//   },
-// ];
-
-// const cardData = {
-//   name: "Yosemite Valley",
-//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-// };
-
 // Variables
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#edit-modal");
@@ -252,12 +214,6 @@ newCardPopup.setEventListeners();
 imageAddButton.addEventListener("click", () => {
   newCardPopup.open();
 });
-
-// const addCardFormElement = document.querySelector("#add-card-form");
-// const cardTitleInput = addCardFormElement.querySelector(
-//   ".modal__input_type_title"
-// );
-// const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 
 function handleAddCardSubmit(inputValue) {
   const name = inputValue.title;
