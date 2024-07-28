@@ -171,6 +171,7 @@ function handleCardLike(cardData) {
       cardData.handleLike(false);
     });
   }
+  cardData.handleLikeCounter();
 }
 
 // Initial Cards

@@ -62,6 +62,15 @@ class Card {
     this._handleLikeIcon();
   }
 
+  handleLikeCounter() {
+    this._likeCounter = this._element.querySelector(".card__like-count");
+    if (!this._like) {
+      this._likeCounter.textContent = "1";
+    } else {
+      this._likeCounter.textContent = "0";
+    }
+  }
+
   //Deleting
 
   removeCard() {
