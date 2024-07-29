@@ -8,6 +8,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupDeleteConfirm from "../components/PopupDeleteConfirm.js";
+import { initialCards, validationSettings } from "../utils/constants.js";
 
 // Variables
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -89,13 +90,13 @@ function handleProfileEditFormSubmit(profileInfo) {
         name: res.name,
         job: res.about,
       });
-    })
+    }, profileEditPopup.close())
     .catch((err) => {
       console.log(err);
     })
     .finally(() => profileEditPopup.setLoading(false));
 
-  profileEditPopup.close();
+  //profileEditPopup.close();
 }
 
 profileEditCloseButton.addEventListener("click", () => {
@@ -104,6 +105,7 @@ profileEditCloseButton.addEventListener("click", () => {
 
 // Change Avatar Modal
 
+const changeAvatarModal = document.querySelector("#change-avatar-modal");
 const changeImageForm = new PopupWithForm(
   "#change-avatar-modal",
   handleChangeAvatarFormSubmit
@@ -178,15 +180,6 @@ function handleCardLike(cardData) {
 
 // Initial Cards
 
-const cardList = new Section(
-  {
-    renderer: (items) => {
-      cardList.addItem(items);
-    },
-  },
-  ".cards__list"
-);
-
 function getCardElement(cardData) {
   const card = new Card(
     cardData,
@@ -198,6 +191,15 @@ function getCardElement(cardData) {
   const element = card.getView();
   return element;
 }
+
+const cardList = new Section(
+  {
+    renderer: (items) => {
+      cardList.addItem(items);
+    },
+  },
+  ".cards__list"
+);
 
 async function cardListData() {
   const initialCardData = await api.getInitialCards();
@@ -221,12 +223,17 @@ imageAddButton.addEventListener("click", () => {
 function handleAddCardSubmit(inputValue) {
   const name = inputValue.title;
   const link = inputValue.link;
-  api.createNewCard({ name, link }).then((card) => {
-    const cardElement = getCardElement(card);
-    cardList.addItem(cardElement);
-  });
-  newCardPopup.reset();
-  newCardPopup.close();
+  api
+    .createNewCard({ name, link })
+    .then((card) => {
+      const cardElement = getCardElement(card);
+      cardList.addItem(cardElement);
+      newCardPopup.reset();
+      newCardPopup.close();
+    })
+    .catch((err) => console.error(err));
+  //newCardPopup.reset();
+  //newCardPopup.close();
   addFormValidator.toggleButtonState();
 }
 
@@ -237,13 +244,13 @@ function handleImageClick(cardData) {
 }
 
 // Validation
-const validationSettings = {
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
+// const validationSettings = {
+//   inputSelector: ".modal__input",
+//   submitButtonSelector: ".modal__button",
+//   inactiveButtonClass: "modal__button_disabled",
+//   inputErrorClass: "modal__input_type_error",
+//   errorClass: "modal__error_visible",
+// };
 
 const editFormValidator = new FormValidator(
   validationSettings,
@@ -251,5 +258,11 @@ const editFormValidator = new FormValidator(
 );
 const addFormValidator = new FormValidator(validationSettings, imageAddModal);
 
+const avatarFormValidator = new FormValidator(
+  validationSettings,
+  changeAvatarModal
+);
+
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
