@@ -9,7 +9,7 @@ class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
-    this._like = data.isLiked;
+    this.like = data.isLiked;
 
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
@@ -50,14 +50,14 @@ class Card {
   //Liking
 
   _handleLikeIcon() {
-    if (this._like) {
+    if (this.like) {
       this._likeButton.classList.add("card__like-button_active");
     } else {
       this._likeButton.classList.remove("card__like-button_active");
     }
 
     this._likeCounter = this._element.querySelector(".card__like-count");
-    if (this._like) {
+    if (this.like) {
       this._likeCounter.textContent = "1";
     } else {
       this._likeCounter.textContent = "0";
@@ -65,7 +65,7 @@ class Card {
   }
 
   handleLike(liked) {
-    this._like = liked;
+    this.like = liked;
     this._handleLikeIcon();
   }
 

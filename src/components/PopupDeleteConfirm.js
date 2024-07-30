@@ -15,8 +15,8 @@ export default class PopupDeleteConfirm extends Popup {
     }
   }
 
-  confirmDelete(api) {
-    this._handleFormSubmit = api;
+  confirmDelete(submitHandler) {
+    this._handleFormSubmit = submitHandler;
   }
 
   setEventListeners() {

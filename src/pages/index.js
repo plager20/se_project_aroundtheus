@@ -116,8 +116,7 @@ const changeAvatarButton = document.querySelector(
   ".change-avatar__edit-button"
 );
 
-changeAvatarButton.addEventListener("click", (evt) => {
-  evt.preventDefault;
+changeAvatarButton.addEventListener("click", () => {
   changeImageForm.open();
 });
 
@@ -135,14 +134,6 @@ function handleChangeAvatarFormSubmit(profileInfo) {
 
 // Delete Card
 
-const deleteImageModal = document.querySelector("#delete-image-modal");
-const deleteImageConfirmationButton =
-  deleteImageModal.querySelector(".modal__button");
-
-deleteImageConfirmationButton.addEventListener("click", () => {
-  deleteConfirmation.setLoading(true);
-});
-
 const deleteConfirmation = new PopupDeleteConfirm(
   "#delete-image-modal",
   handleDeleteCard
@@ -151,8 +142,8 @@ deleteConfirmation.setEventListeners();
 
 function handleDeleteCard(cardData) {
   deleteConfirmation.open();
-
   deleteConfirmation.confirmDelete(() => {
+    deleteConfirmation.setLoading(true);
     api
       .deleteCard(cardData.getCardId())
       .then(() => {
@@ -167,11 +158,11 @@ function handleDeleteCard(cardData) {
 //Liking and Disliking Cards
 
 function handleCardLike(cardData) {
-  if (!cardData._like) {
+  if (!cardData.like) {
     api.likeCard(cardData.getCardId()).then(() => {
       cardData.handleLike(true);
     });
-  } else if (cardData._like) {
+  } else if (cardData.like) {
     api.dislikeCard(cardData.getCardId()).then(() => {
       cardData.handleLike(false);
     });
@@ -230,11 +221,9 @@ function handleAddCardSubmit(inputValue) {
       cardList.addItem(cardElement);
       newCardPopup.reset();
       newCardPopup.close();
+      addFormValidator.toggleButtonState();
     })
     .catch((err) => console.error(err));
-  //newCardPopup.reset();
-  //newCardPopup.close();
-  addFormValidator.toggleButtonState();
 }
 
 // View Image Popup
@@ -244,13 +233,6 @@ function handleImageClick(cardData) {
 }
 
 // Validation
-// const validationSettings = {
-//   inputSelector: ".modal__input",
-//   submitButtonSelector: ".modal__button",
-//   inactiveButtonClass: "modal__button_disabled",
-//   inputErrorClass: "modal__input_type_error",
-//   errorClass: "modal__error_visible",
-// };
 
 const editFormValidator = new FormValidator(
   validationSettings,
