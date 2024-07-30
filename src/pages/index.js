@@ -194,10 +194,10 @@ const cardList = new Section(
 
 async function cardListData() {
   const initialCardData = await api.getInitialCards();
-  const cardElement = initialCardData.map((cardData) =>
+  const cardElements = initialCardData.map((cardData) =>
     getCardElement(cardData)
   );
-  cardList.renderItems(cardElement);
+  cardList.renderItems(cardElements);
 }
 
 cardListData();
