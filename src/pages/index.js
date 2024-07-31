@@ -186,7 +186,7 @@ function getCardElement(cardData) {
 const cardList = new Section(
   {
     renderer: (items) => {
-      cardList.addItem(items);
+      cardList.addItem(getCardElement(items));
     },
   },
   ".cards__list"
@@ -194,10 +194,7 @@ const cardList = new Section(
 
 async function cardListData() {
   const initialCardData = await api.getInitialCards();
-  const cardElements = initialCardData.map((cardData) =>
-    getCardElement(cardData)
-  );
-  cardList.renderItems(cardElements);
+  cardList.renderItems(initialCardData);
 }
 
 cardListData();
