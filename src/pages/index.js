@@ -86,22 +86,19 @@ function handleProfileEditFormSubmit(profileInfo) {
   api
     .updateUserInfo(profileInfo)
     .then((res) => {
-      userInfo.setUserInfo({
-        name: res.name,
-        job: res.about,
-      });
-    }, profileEditPopup.close())
+      userInfo.setUserInfo(
+        {
+          name: res.name,
+          job: res.about,
+        },
+        profileEditPopup.close()
+      );
+    })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => profileEditPopup.setLoading(false));
-
-  //profileEditPopup.close();
 }
-
-profileEditCloseButton.addEventListener("click", () => {
-  profileEditPopup.close();
-});
 
 // Change Avatar Modal
 
@@ -209,6 +206,7 @@ imageAddButton.addEventListener("click", () => {
 });
 
 function handleAddCardSubmit(inputValue) {
+  newCardPopup.setLoading(true);
   const name = inputValue.title;
   const link = inputValue.link;
   api
@@ -219,6 +217,7 @@ function handleAddCardSubmit(inputValue) {
       newCardPopup.reset();
       newCardPopup.close();
       addFormValidator.toggleButtonState();
+      newCardPopup.setLoading(false);
     })
     .catch((err) => console.error(err));
 }
