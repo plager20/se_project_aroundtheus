@@ -86,13 +86,11 @@ function handleProfileEditFormSubmit(profileInfo) {
   api
     .updateUserInfo(profileInfo)
     .then((res) => {
-      userInfo.setUserInfo(
-        {
-          name: res.name,
-          job: res.about,
-        },
-        profileEditPopup.close()
-      );
+      userInfo.setUserInfo({
+        name: res.name,
+        job: res.about,
+      });
+      profileEditPopup.close();
     })
     .catch((err) => {
       console.log(err);
@@ -156,13 +154,19 @@ function handleDeleteCard(cardData) {
 
 function handleCardLike(cardData) {
   if (!cardData.like) {
-    api.likeCard(cardData.getCardId()).then(() => {
-      cardData.handleLike(true);
-    });
+    api
+      .likeCard(cardData.getCardId())
+      .then(() => {
+        cardData.handleLike(true);
+      })
+      .catch((err) => console.error(err));
   } else if (cardData.like) {
-    api.dislikeCard(cardData.getCardId()).then(() => {
-      cardData.handleLike(false);
-    });
+    api
+      .dislikeCard(cardData.getCardId())
+      .then(() => {
+        cardData.handleLike(false);
+      })
+      .catch((err) => console.error(err));
   }
 }
 
@@ -219,7 +223,8 @@ function handleAddCardSubmit(inputValue) {
       addFormValidator.toggleButtonState();
       newCardPopup.setLoading(false);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
+    .finally(newCardPopup.setLoading(false));
 }
 
 // View Image Popup
