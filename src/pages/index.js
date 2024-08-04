@@ -210,9 +210,9 @@ imageAddButton.addEventListener("click", () => {
 });
 
 function handleAddCardSubmit(inputValue) {
-  newCardPopup.setLoading(true);
   const name = inputValue.title;
   const link = inputValue.link;
+  newCardPopup.setLoading(true);
   api
     .createNewCard({ name, link })
     .then((card) => {
@@ -221,10 +221,9 @@ function handleAddCardSubmit(inputValue) {
       newCardPopup.reset();
       newCardPopup.close();
       addFormValidator.toggleButtonState();
-      newCardPopup.setLoading(false);
     })
     .catch((err) => console.error(err))
-    .finally(newCardPopup.setLoading(false));
+    .finally(() => newCardPopup.setLoading(false));
 }
 
 // View Image Popup
